@@ -3,11 +3,14 @@ package lippia.web.services;
 
 import com.crowdar.core.actions.WebActionManager;
 import com.crowdar.driver.DriverManager;
+import io.lippia.api.lowcode.variables.VariablesManager;
 import junit.framework.Assert;
 import lippia.web.constants.TimeTrackerConstants;
-import java.util.UUID;
 
+
+import static com.crowdar.core.actions.ActionManager.isPresent;
 import static com.crowdar.core.actions.ActionManager.isVisible;
+
 
 public class TimeTrackerService {
 
@@ -21,10 +24,9 @@ public class TimeTrackerService {
     public static void dotsIcon() {
         WebActionManager.click(TimeTrackerConstants.THREE_DOTS_ICON);
     }
-    public static void manageWorkspaces() {
-        WebActionManager.click(TimeTrackerConstants.MANAGE_WORKSPACES);
-    }
+
     public static void clickOnProject() {
+
         WebActionManager.click(TimeTrackerConstants.PROJECT_BUTTON);
     }
     public static void newProjectButton() {
@@ -43,23 +45,86 @@ public class TimeTrackerService {
     public static void clickOnCreate() {
         WebActionManager.click(TimeTrackerConstants.CREATE_BUTTON);
     }
-    public static void verifyCreatedProject(String projectName) {
-        WebActionManager.click(TimeTrackerConstants.PROJECTS_BUTTON);
-        WebActionManager.setInput(TimeTrackerConstants.FIND_BY_NAME_INPUT,projectName);
-        WebActionManager.click(TimeTrackerConstants.APPLY_FILTER_BUTTON);
-        Assert.assertTrue(isVisible(projectName));
+
+    public static void setStart(String start) {
+        WebActionManager.click(TimeTrackerConstants.START_INPUT);
+        WebActionManager.setInput(TimeTrackerConstants.START_INPUT,start);
     }
-    public static class ProjectNameGenerator {
-        public static String generateRandomProjectName() {
-            return UUID.randomUUID().toString().toUpperCase().substring(0,6);
-        }
-        public static void main(String[] args) {
-            String randomProjectName = generateRandomProjectName();
-            System.out.println(randomProjectName);
-        }
-}
-    public static void setProjectName(String projectName) {
-        WebActionManager.setInput(TimeTrackerConstants.PROJECT_NAME_INPUT,projectName);
+
+    public static void setEnd(String end) {
+        WebActionManager.click(TimeTrackerConstants.END_INPUT);
+        WebActionManager.setInput(TimeTrackerConstants.END_INPUT,end);
     }
+
+    public static void setDate(String date) {
+        WebActionManager.click(TimeTrackerConstants.DATE_INPUT);
+        WebActionManager.setInput(TimeTrackerConstants.DATE_INPUT,date);
+    }
+
+    public static void clickOnAdd() {
+        WebActionManager.click(TimeTrackerConstants.ADD_BUTTON);
+    }
+
+    public static void verifyTimeEntry() {
+        WebActionManager.waitVisibility (TimeTrackerConstants.NEW_TIME_ENTRY);
+        Assert.assertTrue(isVisible(TimeTrackerConstants.NEW_TIME_ENTRY));
+    }
+
+    public static void setDescription(String description) {
+        WebActionManager.setInput(TimeTrackerConstants.DESCRIPTION_INPUT, description);
+    }
+
+    public static void clickOnTimer() {
+        WebActionManager.click(TimeTrackerConstants.TIMER);
+    }
+
+    public static void clickOnStart() {
+        WebActionManager.click(TimeTrackerConstants.START_BUTTON);
+    }
+
+    public static void clickOnThreeDots() {
+        WebActionManager.click(TimeTrackerConstants.THREE_DOTS);
+    }
+
+    public static void clickOnDiscard() {
+        WebActionManager.click(TimeTrackerConstants.DISCARD);
+    }
+
+    public static void clickOnDiscardConfirmation() {
+        WebActionManager.click(TimeTrackerConstants.DISCARD_CONFIRMATION);
+    }
+
+    public static void verifyCancelledTimeEntry() {
+        Assert.assertFalse(isPresent(TimeTrackerConstants.CANCELLED_TIME_ENTRY));
+    }
+
+    public static void clickOnManual() {
+        WebActionManager.click(TimeTrackerConstants.MANUAL);
+    }
+
+
+    public static void setUpdatedDescription(String updated) {
+        WebActionManager.getElement(TimeTrackerConstants.UPDATED_DESCRIPTION);
+        WebActionManager.click(TimeTrackerConstants.UPDATED_DESCRIPTION);
+        WebActionManager.setInput(TimeTrackerConstants.UPDATED_DESCRIPTION,updated);
+    }
+
+    public static void selectProject(String project) {
+        WebActionManager.click(TimeTrackerConstants.PROJECT,project);
+    }
+
+    public static void seeMessage() {
+        WebActionManager.waitPresence(TimeTrackerConstants.TIMER_CANCELLED);
+        Assert.assertTrue(isPresent(TimeTrackerConstants.TIMER_CANCELLED));
+    }
+
+    public static void selectTheProject(String newProject) {
+        WebActionManager.click(TimeTrackerConstants.NEW_PROJECT,newProject);
+    }
+
+    public static void verifyUpdatedData() {
+        Assert.assertTrue(isVisible(TimeTrackerConstants.UPDATED));
+    }
+
 }
 

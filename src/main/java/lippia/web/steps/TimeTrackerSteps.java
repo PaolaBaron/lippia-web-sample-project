@@ -24,19 +24,12 @@ public class TimeTrackerSteps extends PageSteps {
         TimeTrackerService.dotsIcon();
     }
 
-    @And("The client clicks on 'Manage Workspaces'")
-    public void theClientClicksOnManageWorkspaces() {
-        TimeTrackerService.manageWorkspaces();
-    }
-
-    @Given("The client is on time tracker page with email 'usuario.clockify@gmail.com' and password 'clockify1234'")
-    public void theClientIsOnTimeTrackerPageEmailPassword() {
+    @Given("The client is on time tracker page with email (.*) and password (.*)")
+    public void theClientIsOnTimeTrackerPageEmailPassword(String email,String pass) {
         LandingPageService.navegarWeb();
         LandingPageService.ClickOnLogIn();
         LoginService.logInManually();
-        String email = "usuario.clockify@gmail.com";
         LoginService.setEmail( email );
-        String pass = "clockify1234";
         LoginService.setPassword( pass );
         LoginService.logInButton();
         TimeTrackerService.verifyMessage();
@@ -48,38 +41,95 @@ public class TimeTrackerSteps extends PageSteps {
         TimeTrackerService.clickOnProject();
     }
 
-    @And("The client clicks on 'Create new project'")
-    public void theClientClicksOnCreateNewProject() {
-        TimeTrackerService.newProjectButton();
+
+    @When("The client sets start time (.*)")
+    public void theClientSetsStartTime(String start) {
+        TimeTrackerService.setStart(start);
     }
 
-    @When("The client clicks on name icon")
-    public void theClientClicksOnNameIcon() {
-        TimeTrackerService.clickOnNameIcon();
+    @And("The client sets end time (.*)")
+    public void theClientSetsEndTime(String end) {
+        TimeTrackerService.setEnd(end);
     }
 
-    @And("The client clicks on 'Log out'")
-    public void theClientClicksOnLogOut() {
-        TimeTrackerService.clickOnLogOut();
+    @And("The client sets date (.*)")
+    public void theClientSetsDate(String date) {
+        TimeTrackerService.setDate(date);
     }
 
-    @And("The client sets project name")
-    public void theClientSetsProjectName() {
-        String projectName = TimeTrackerService.ProjectNameGenerator.generateRandomProjectName();
-        TimeTrackerService.setProjectName(projectName);
+    @And("The client clicks on Add button")
+    public void theClientClicksOnAddButton() {
+        TimeTrackerService.clickOnAdd();
     }
-    @And("The client clicks on 'Create'")
-    public void theClientClicksOnCreate() {
-        TimeTrackerService.clickOnCreate();
+
+    @Then("The client verifies the new time entry is created")
+    public void theClientVerifiesTheNewTimeEntry() {
+        TimeTrackerService.verifyTimeEntry();
     }
-    @Then("The client verifies the new project is created")
-    public void theClientVerifiesNewProjectIsCreated() {
-        String projectName = TimeTrackerService.ProjectNameGenerator.generateRandomProjectName();
-        TimeTrackerService.verifyCreatedProject(projectName);
+
+    @And("The client sets the description (.*)")
+    public void theClientSetsTheDescription(String description) {
+        TimeTrackerService.setDescription(description);
     }
-    @Then("The client verifies login page is displayed")
-    public void theClientVerifiesLoginPageIsDisplayed() {
-        LoginService.verifyUrl("https://app.clockify.me/en/login");
+
+    @When("The client clicks on Timer")
+    public void theClientClicksOnTimer() {
+        TimeTrackerService.clickOnTimer();
+    }
+
+    @And("The client clicks on Start button")
+    public void theClientClicksOnStartButton() {
+        TimeTrackerService.clickOnStart();
+    }
+
+    @And("The client clicks on three dots")
+    public void theClientClicksOnThreeDots() {
+        TimeTrackerService.clickOnThreeDots();
+    }
+
+    @And("The client clicks on Discard")
+    public void theClientClicksOnDiscard() {
+        TimeTrackerService.clickOnDiscard();
+    }
+
+    @And("The client clicks on Discard confirmation")
+    public void theClientClicksOnDiscardConfirmation() {
+        TimeTrackerService.clickOnDiscardConfirmation();
+    }
+
+    @Then("The client verifies the new time entry is not created")
+    public void theClientVerifiesTheNewTimeEntryIsNotCreated() {
+        TimeTrackerService.verifyCancelledTimeEntry();
+    }
+
+    @And("The client clicks on Manual")
+    public void theClientClicksOnManual() {
+        TimeTrackerService.clickOnManual();
+    }
+
+    @When("The client sets (.*) description")
+    public void theClientSetsUpdatedDescription(String updated) {
+        TimeTrackerService.setUpdatedDescription(updated);
+    }
+
+    @And("The client selects project (.*)")
+    public void theClientSelectsProject(String project) {
+        TimeTrackerService.selectProject(project);
+    }
+
+    @And("The client sees the message Timer cancelled")
+    public void theClientSeesTheMessageTimerCancelled() {
+        TimeTrackerService.seeMessage();
+    }
+
+    @And("The client selects the project (.*)")
+    public void theClientSelectsTheProjectNewProject(String newProject) {
+        TimeTrackerService.selectTheProject(newProject);
+    }
+
+    @Then("The client verifies the updated data")
+    public void theClientVerifiesTheUpdatedData() {
+        TimeTrackerService.verifyUpdatedData();
     }
 }
 
